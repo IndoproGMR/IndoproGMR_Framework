@@ -1,4 +1,6 @@
-from model.baseModel import *
+from APP.model.baseModel import *
+
+# from model.baseModel import *
 
 
 def CountOccupation():
@@ -10,8 +12,7 @@ def CountOccupation():
 
         results = getDatabyQuery(db, query)
 
-        json_results = [{"X": row[0], "Y": row[1]}
-                        for row in results]
+        json_results = [{"X": row[0], "Y": row[1]} for row in results]
 
         return json_results
 
