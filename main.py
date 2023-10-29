@@ -1,13 +1,10 @@
-from fastapi import FastAPI, Request
+# import uvicorn
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
 
-from APP.model.Occupation import CountOccupation, bySleepDuration
-from APP.config.View import view
 
-template = Jinja2Templates(directory="web/")
+from APP.routers import test
 
 
 app = FastAPI()
@@ -15,7 +12,6 @@ app = FastAPI()
 app.mount("/css", StaticFiles(directory="web/css"), name="css")
 app.mount("/js", StaticFiles(directory="web/js"), name="js")
 app.mount("/img", StaticFiles(directory="web/img"), name="img")
-
 
 app.add_middleware(
     CORSMiddleware,
@@ -25,23 +21,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 # Route
-@app.get("/", response_class=HTMLResponse)
-async def run(request: Request):
-    data = [{"test": "isi data"}]
-    return view(request, "view/test.html", data)
+app.include_router(test.router)
 
-
-@app.get("/api")
-def read_root(request: Request):
-    return {
-        "client_host": request.client.host,  # type: ignore
-        "client_Port": request.client.port,  # type: ignore
-        "request_url": request.url.path,
-    }
-
-
-@app.get("/api/Occupation")
-def Occupation():
-    return CountOccupation()
+# if __name__ == "__main__":
+#     config = uvicorn.Config("main:app", port=8000, log_level="info")
+#     server = uvicorn.Server(config)
+#     server.run()

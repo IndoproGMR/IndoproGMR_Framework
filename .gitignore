@@ -11,3 +11,6 @@ log/*
 web/dash
 web/vendor
 web/index-*
+
+**.zip
+**.rar
