@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% include '/Template/head.html' %} {% block style %} {% endblock %}
+
+    <body>
+        {% block content %} no view {% endblock %}
+
+        <br />
+        {% include'/Template/footer.html' %}
+    </body>
+    {% block jsF %} {% endblock %}
+</html>

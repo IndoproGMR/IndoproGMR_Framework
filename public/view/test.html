@@ -1,0 +1,7 @@
+{% extends "Template/layout.html" %} {% block content %}
+<h1>html test</h1>
+<a href="{{ url_for('img',path='/favicon.ico') }}">img</a>
+<br />
+<a href="/">img</a>
+<br />
+{{ data[0].test }} {% endblock %}

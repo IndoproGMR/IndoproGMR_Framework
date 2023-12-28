@@ -1,4 +1,4 @@
-from APP.model.baseModel import *
+from APP.models.baseModel import *
 
 # from model.baseModel import *
 

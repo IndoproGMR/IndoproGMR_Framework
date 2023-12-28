@@ -1,5 +1,5 @@
 from APP.routers.baseRouter import *
-from APP.model import Occupation
+from APP.models import Occupation
 
 
 router = APIRouter(

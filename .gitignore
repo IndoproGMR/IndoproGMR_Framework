@@ -1,6 +1,8 @@
 __pycache__
 .env
 .vscode
+.pytest_cache
+.venv
 
 runapp
 

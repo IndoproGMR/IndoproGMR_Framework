@@ -4,6 +4,18 @@ import shutil
 import os
 
 
+
+# create config
+# create command
+# create tampilan
+# ubah bahasa menjadi python
+# buat folder khusus untuk command yang akan di run
+# buat folder khusus untuk template sepert model,config,command
+# dapat mencomple dari html ke html
+# atau menggunakan js untuk menrun pencarian data
+
+
+
 class GUIFramework:
     def __init__(self, root):
         self.root = root

@@ -1,4 +1,4 @@
-# import uvicorn
+import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -9,9 +9,9 @@ from APP.routers import test
 
 app = FastAPI()
 
-app.mount("/css", StaticFiles(directory="web/css"), name="css")
-app.mount("/js", StaticFiles(directory="web/js"), name="js")
-app.mount("/img", StaticFiles(directory="web/img"), name="img")
+app.mount("/css", StaticFiles(directory="public/css"), name="css")
+app.mount("/js", StaticFiles(directory="public/js"), name="js")
+app.mount("/img", StaticFiles(directory="public/img"), name="img")
 
 app.add_middleware(
     CORSMiddleware,
@@ -24,7 +24,7 @@ app.add_middleware(
 # Route
 app.include_router(test.router)
 
-# if __name__ == "__main__":
-#     config = uvicorn.Config("main:app", port=8000, log_level="info")
-#     server = uvicorn.Server(config)
-#     server.run()
+if __name__ == "__main__":
+    config = uvicorn.Config("main:app", port=8000)
+    server = uvicorn.Server(config)
+    server.run()
