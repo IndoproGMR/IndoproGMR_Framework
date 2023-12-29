@@ -13,6 +13,7 @@ log/*
 web/dash
 web/vendor
 web/index-*
+tmp/*
 
 **.zip
 **.rar
