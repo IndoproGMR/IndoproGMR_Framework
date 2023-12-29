@@ -1,6 +1,7 @@
 from datetime import datetime
 import time
 from pprint import pprint
+from pydantic import BaseModel
 
 from APP.config.conn import connect_to_mysql, close_mysql_connection
 
