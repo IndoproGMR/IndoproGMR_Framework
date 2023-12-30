@@ -25,13 +25,13 @@ app.add_middleware(
 # Route
 app.include_router(test.router)
 
-if __name__ == "__main__":
-    config = uvicorn.Config(
-        "main:app",
-        host=getenvval("link.base", default="0.0.0.0"),  # type: ignore
-        port=int(getenvval("link.port.API", default=8000)),  # type: ignore
-        log_level="info",  # type: ignore
-        # reload=True,
-    )
-    server = uvicorn.Server(config)
-    server.run()
+# if __name__ == "__main__":
+#     config = uvicorn.Config(
+#         "main:app",
+#         host=getenvval("link.base", default="0.0.0.0"),  # type: ignore
+#         port=int(getenvval("link.port.API", default=8000)),  # type: ignore
+#         log_level="info",  # type: ignore
+#         # reload=True,
+#     )
+#     server = uvicorn.Server(config)
+#     server.run()
