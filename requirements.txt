@@ -2,7 +2,7 @@ fastapi
 redis
 # types-redis
 uvicorn
-mysql
+# mysql
 # pprint
 # tkinter
 # shutil
