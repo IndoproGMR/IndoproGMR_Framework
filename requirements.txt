@@ -4,5 +4,5 @@ redis
 uvicorn
 mysql
 # pprint
-tkinter
-shutil
+# tkinter
+# shutil
