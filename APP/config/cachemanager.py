@@ -6,7 +6,7 @@ from APP.config.cache.redis import RedisCache
 load_dotenv()
 
 
-def create_cache():
+def create_cache(cache_type="file"):
     cache_type = getenvval("cache.type")
     if cache_type == "redis":
         return RedisCache()
