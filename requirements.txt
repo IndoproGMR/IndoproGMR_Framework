@@ -3,7 +3,7 @@ uvicorn
 redis
 python-dotenv
 Jinja2
-
+mysql-connector-python
 # types-redis
 # mysql
 # pprint
