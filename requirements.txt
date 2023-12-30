@@ -1,5 +1,6 @@
 fastapi
 redis
+python-dotenv
 # types-redis
 uvicorn
 # mysql
