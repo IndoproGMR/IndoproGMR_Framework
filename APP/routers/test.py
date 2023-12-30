@@ -15,7 +15,7 @@ router = APIRouter(
 @router.get("/", response_class=HTMLResponse)
 def html(request: Request):
     data = [{"test": "isi data"}]
-    return view(request, "view/test.html", data)
+    return view(request, "views/test.html", data)
 
 
 @router.get("/aaa/{id}")
@@ -35,11 +35,11 @@ def read_root(request: Request):
 
 @router.get("/oc")
 async def test():
-    data = {"a": "test1", "b": "test2", "c": "test3"}
+    # data = {"a": "test1", "b": "test2", "c": "test3"}
 
     # data = "aaaaaaaaaaa"
 
-    cache_manager.cache_set("test", data)
+    # cache_manager.cache_set("test", data)
     result = cache_manager.cache_get("test")
     return result
 

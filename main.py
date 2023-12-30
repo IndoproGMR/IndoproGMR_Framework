@@ -2,6 +2,7 @@ import uvicorn
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from APP.config.dotenvfile import getenvval
 
 
 from APP.routers import test
@@ -25,6 +26,12 @@ app.add_middleware(
 app.include_router(test.router)
 
 if __name__ == "__main__":
-    config = uvicorn.Config("main:app", port=8000)
+    config = uvicorn.Config(
+        "main:app",
+        host=getenvval("link.base", default="0.0.0.0"),  # type: ignore
+        port=int(getenvval("link.port.API", default=8000)),  # type: ignore
+        log_level="info",  # type: ignore
+        # reload=True,
+    )
     server = uvicorn.Server(config)
     server.run()

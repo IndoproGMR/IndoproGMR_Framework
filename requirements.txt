@@ -3,6 +3,6 @@ redis
 # types-redis
 uvicorn
 mysql
-pprint
+# pprint
 tkinter
 shutil
