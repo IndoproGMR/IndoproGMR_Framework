@@ -1,8 +1,10 @@
 fastapi
+uvicorn
 redis
 python-dotenv
+Jinja2
+
 # types-redis
-uvicorn
 # mysql
 # pprint
 # tkinter
