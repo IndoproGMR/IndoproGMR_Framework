@@ -1,0 +1,35 @@
+{
+    "Route Get": {
+        "prefix": "FRG",
+        "body": [
+            "@router.get(\"/\")",
+            "def method_name():",
+            "    return {\"message\": \"hello world\"}"
+        ]
+    },
+    "Route Post": {
+        "prefix": "FRP",
+        "body": [
+            "@router.post(\"/\")",
+            "def method_name():",
+            "    return {\"message\": \"hello world\"}"
+        ]
+    },
+
+    "async Route Get": {
+        "prefix": "FRGA",
+        "body": [
+            "@router.get(\"/\")",
+            "async def method_name():",
+            "    return {\"message\": \"hello world\"}"
+        ]
+    },
+    "async Route Post": {
+        "prefix": "FRPA",
+        "body": [
+            "@router.post(\"/\")",
+            "async def method_name():",
+            "    return {\"message\": \"hello world\"}"
+        ]
+    }
+}
