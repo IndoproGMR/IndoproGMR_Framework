@@ -9,7 +9,8 @@ from pathlib import Path
 from sqlalchemy import false, true
 
 # Mengatur folder tempat menyimpan file
-UPLOAD_FOLDER = Path("uploadFolder")
+# UPLOAD_FOLDER = Path("uploadFolder")
+UPLOAD_FOLDER = Path("tmp")
 
 
 def saveFile(file, filename: Union[str, None] = None):
