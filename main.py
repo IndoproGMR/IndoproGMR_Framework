@@ -4,20 +4,24 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from APP.config.dotenvfile import getenvval
 
-
 from APP.routers import test
 
 
-app = FastAPI()
+app = FastAPI(
+    # docs_url=None,
+    # redoc_url=None,
+    # openapi_prefix="/api/v1",
+    responses={404: {"description": "Not found"}},
+)
 
-app.mount("/css", StaticFiles(directory="public/css"), name="css")
-app.mount("/js", StaticFiles(directory="public/js"), name="js")
-app.mount("/img", StaticFiles(directory="public/img"), name="img")
+app.mount("/asset/css", StaticFiles(directory="public/css"), name="css")
+app.mount("/asset/js", StaticFiles(directory="public/js"), name="js")
+app.mount("/asset/img", StaticFiles(directory="public/img"), name="img")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins={"*"},
     allow_credentials=True,
+    allow_origins={"*"},
     allow_methods=["*"],
     allow_headers=["*"],
 )

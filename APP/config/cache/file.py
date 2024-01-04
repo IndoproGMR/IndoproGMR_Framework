@@ -1,5 +1,6 @@
-import json
 import os
+import json
+from .converter_Cache import convert_from_cache, convert_to_cache
 
 
 class FileCache:
@@ -25,16 +26,11 @@ class FileCache:
     def cache_get(self, key):
         result = self.cache_data.get(key)
         if result is not None:
-            result = self._convert_from_cache(result)
+            result = convert_from_cache(result)
         return result
-        # return self.cache_data.get(key)
 
     def cache_set(self, key, value, ttl=None):
-        # if not isinstance(value, str):
-        # value = json.dumps(value)
-        # self.cache_data[key] = value
-        # self.save_cache()
-        self.cache_data[key] = self._convert_to_cache(value)
+        self.cache_data[key] = convert_to_cache(value)
         self.save_cache()
 
     def cache_delete(self, key):
@@ -42,10 +38,10 @@ class FileCache:
             del self.cache_data[key]
             self.save_cache()
 
-    def _convert_to_cache(self, value):
-        # Mengonversi nilai ke dalam bentuk yang sesuai untuk disimpan di cache
-        return json.dumps(value)
+    # def _convert_to_cache(self, value):
+    #     # Mengonversi nilai ke dalam bentuk yang sesuai untuk disimpan di cache
+    #     return json.dumps(value)
 
-    def _convert_from_cache(self, value):
-        # Mengonversi nilai dari bentuk yang disimpan di cache ke bentuk semula
-        return json.loads(value)
+    # def _convert_from_cache(self, value):
+    #     # Mengonversi nilai dari bentuk yang disimpan di cache ke bentuk semula
+    #     return json.loads(value)

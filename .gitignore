@@ -18,9 +18,11 @@ public/dash
 public/vendor
 public/index-*
 
-public1/*
-
 tmp/*
+
+uploadFolder/*
+!uploadFolder/.gitkeep
+
 
 **.zip
 **.rar
