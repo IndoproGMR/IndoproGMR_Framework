@@ -1,20 +1,29 @@
-import pprint
-from APP.config import upload
 from APP.routers.baseRouter import *
-from pydantic import BaseModel
-from typing import Union
+from APP.config.upload import saveFile
+
+from typing import Annotated, Union
 
 from helpers.testdemo import ohsit
 
-from APP.config.cachemanager import create_cache
 
-from APP.config.upload import *
+from APP.config.dependencies import get_token_header
+from fastapi import UploadFile, File, Depends
+
+
+from APP.config.cachemanager import create_cache
 
 cache_manager = create_cache()
 
 
-class TestModelNama(BaseModel):
-    Nama: str
+from pydantic import BaseModel, validator
+
+
+router = APIRouter(
+    prefix="/test",
+    tags=["test"],
+    responses={404: {"detail": "Not found"}},  # type: ignore
+    # dependencies=[Depends(get_token_header)],
+)
 
 
 class Image(BaseModel):
@@ -22,11 +31,33 @@ class Image(BaseModel):
     name: str
 
 
-router = APIRouter(
-    prefix="/test",
-    tags=["test"],
-    responses={404: {"detail": "Not found"}},
-)
+@router.post("/uploadfile")
+async def create_upload_file(detail_foto: str, file: UploadFile = File(...)):
+    status, saved_filename = await saveFile(file, Path_FOLDER="pdf/now")
+    if status:
+        return ApiRespond(
+            {"filename": saved_filename, "detail_foto": detail_foto},
+            code=200,
+            messages="berhasil",
+        )
+    else:
+        return ApiRespond({"filename": saved_filename}, code=500, messages="gagal")
+
+
+@router.post("/multiFiles")
+async def method_Upload(
+    files: Annotated[list[UploadFile], File()],
+):
+    for file in files:
+        status, saved_filename = await saveFile(file, Path_FOLDER="pdf/now")
+        if status is False:
+            return {"detail": "Upload Failed"}
+
+    return {"filename": "saved_filename"}
+
+
+class TestModelNama(BaseModel):
+    Nama: str
 
 
 @router.post("/nama")
@@ -46,7 +77,10 @@ def method_name(
     }
 
 
-@router.get("/", response_class=HTMLResponse)
+@router.get(
+    "/",
+    response_class=HTMLResponse,
+)
 def html(request: Request):
     data = [{"test": "isi data"}]
     return view(request, "views/test.html", data)
@@ -54,6 +88,7 @@ def html(request: Request):
 
 @router.get("/aaa/{id}")
 async def root(id: str):
+    # return {"message": "hello world", "id": id, "x_token": x_token}
     return {"message": "hello world", "id": id}
 
 
@@ -87,51 +122,11 @@ async def test(
         "request7": ohsit(),
     }
 
-    # data = {"a": "test1", "b": "test2", "c": "test3"}
-
-    # data = "aaaaaaaaaaa"
-
-    # cache_manager.cache_set("test", data)
-    # result = cache_manager.cache_get("test")
-    # return result
-
-    # result_json = cache_manager.cache_get("test")
-
-    # if result_json is not None:
-    #     result = json.loads(result_json)
-    #     return result
-    # else:
-    #     return None
-
-    # Cacheset(key="test", value=data)
-    # Cacheset("test", "test")
-    # return Cacheget("test")
-    # if Cacheget("test") == "test":
-    # return "True"
-    # else:
-    # return "False"
-    # return
-
-
-# return Occupation.CountOccupation()
-
 
 @router.get("/cache")
 def cache():
-    # if cache_manager.cache_get("test"):
-    cache_manager.cache_set("test", ["test1", "test2", "test3"])
-
-    return {"respond": cache_manager.cache_get("test")}
-    # return {"message": "hello world"}
-
-
-class FileValidasi(BaseModel):
-    upload_file: UploadFile
-
-
-@router.post("/uploadfile/")
-async def create_upload_file(file: UploadFile):
-    if saveFile(file):
-        return JSONResponse(content={"filename": file.filename}, status_code=200)
-    else:
-        return JSONResponse(content={"detail": "gagal"}, status_code=500)
+    cache_manager.cache_set("test1", ["test1", "test2", "test3"])
+    cache_manager.cache_set(
+        "test2", {"test1": "test2", "test3": ["test1", "test2", "test3"]}
+    )
+    return {"respond": cache_manager.cache_get("test2")}

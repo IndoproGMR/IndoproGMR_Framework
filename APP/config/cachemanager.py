@@ -1,12 +1,11 @@
-from dotenv import load_dotenv
+from typing import Union
+
 from APP.config.dotenvfile import getenvval
 from APP.config.cache.file import FileCache
 from APP.config.cache.redis import RedisCache
 
-load_dotenv()
 
-
-def create_cache():
+def create_cache(cache_file_path: Union[str, None] = "tmp/cache/"):
     cache_type = getenvval("cache.type")
 
     if cache_type is None:
@@ -15,7 +14,7 @@ def create_cache():
     if cache_type == "redis":
         return RedisCache()
     elif cache_type == "file":
-        return FileCache("tmp/cache.json")
+        return FileCache(cache_file_path, "cache.json")
     else:
         raise ValueError(f"Invalid cache type: {cache_type}")
 

@@ -1,11 +1,7 @@
-from APP.models.baseModel import *
-
-# from model.baseModel import *
+from .baseModel import *
 
 
 def CountOccupation():
-    # pprint(getHumanTime())
-    # pprint(getUnixTimeStamp())
     db = connect_to_mysql()
     if db:
         query = "SELECT `Occupation`,COUNT(*) as total FROM `Sleep_health_and_lifestyle_dataset` GROUP BY `Occupation`;"

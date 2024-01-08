@@ -26,11 +26,3 @@ class RedisCache:
 
     def cache_delete(self, key):
         self.r.delete(key)
-
-    # def _convert_to_cache(self, value):
-    #     # Mengonversi nilai ke dalam bentuk yang sesuai untuk disimpan di cache
-    #     return json.dumps(value)
-
-    # def _convert_from_cache(self, value):
-    #     # Mengonversi nilai dari bentuk yang disimpan di cache ke bentuk semula
-    #     return json.loads(value)

@@ -2,7 +2,7 @@ import pymysql
 import time
 
 from datetime import datetime
-from pprint import pprint
+
 
 from APP.config.conn import connect_to_mysql, close_mysql_connection
 

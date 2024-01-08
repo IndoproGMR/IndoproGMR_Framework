@@ -1,21 +1,38 @@
-import shutil
-from typing import Annotated
-import secrets
-from fastapi import UploadFile
 from typing import Union
-import shutil
 from pathlib import Path
+from APP.config.dotenvfile import getenvval
 
-from sqlalchemy import false, true
-
-# Mengatur folder tempat menyimpan file
-# UPLOAD_FOLDER = Path("uploadFolder")
-UPLOAD_FOLDER = Path("tmp")
+import secrets
+import shutil
 
 
-def saveFile(file, filename: Union[str, None] = None):
-    # Pastikan folder uploadFolder sudah ada
-    UPLOAD_FOLDER.mkdir(parents=True, exist_ok=True)
+# file type list
+# https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
+
+
+async def saveFile(
+    file,
+    filename: Union[str, None] = None,
+    Path_FOLDER: Union[str, None] = None,
+    file_type: Union[str, None] = None,
+):
+    # filter file yang tidak diperbolehkan
+    if file_type is not None:
+        if file.content_type != file_type:
+            return False, None
+
+    # Mengatur folder tempat menyimpan file
+    UPLOAD_FOLDER = Path(getenvval("Folder.Upload.Path"))  # type: ignore
+
+    if Path_FOLDER is None:
+        # menggunakan default folder
+        folder_Path = UPLOAD_FOLDER
+    else:
+        # menambahkan folder default dan Path_FOLDER
+        folder_Path = UPLOAD_FOLDER.joinpath(Path_FOLDER)
+
+    # membuat folder jika belum ada
+    folder_Path.mkdir(parents=True, exist_ok=True)
 
     if filename is None:
         # Jika tidak ada nama file yang diberikan, maka gunakan random string
@@ -37,15 +54,16 @@ def saveFile(file, filename: Union[str, None] = None):
         filename = filename.replace("-", "_")
 
     # Gabungkan path file untuk disimpan
-    file_path = UPLOAD_FOLDER / filename  # type: ignore
+    file_path = folder_Path / filename  # type: ignore
+    # print(file_path)
 
     try:
         # Menyimpan file ke server
         with file_path.open("wb") as buffer:
             shutil.copyfileobj(file.file, buffer)
             # file.close()
-        return true
+        return True, filename
     except Exception as e:
         print(e)
-        file.close()
-        return false
+        # file.close()
+        return False, None
