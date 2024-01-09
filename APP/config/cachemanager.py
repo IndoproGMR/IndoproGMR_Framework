@@ -6,7 +6,7 @@ from APP.config.cache.redis import RedisCache
 
 
 def create_cache(cache_file_path: Union[str, None] = "tmp/cache/"):
-    cache_type = getenvval("cache.type")
+    cache_type = getenvval("cache.type", "file")
 
     if cache_type is None:
         cache_type = "file"

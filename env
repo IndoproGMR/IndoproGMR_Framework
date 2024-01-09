@@ -15,17 +15,28 @@
 # Cache
 # --------------------------------------------------------------------
 
-# cache.type="file"
 # cache.type="redis"
+# cache.type="file"
+
+# cache.auto_clear="True" # untuk cache_type = file
+# cache.auto_clear="False" # untuk cache_type = file
+
 # cache.host="127.0.0.1"
 # cache.port=6379
 # cache.password=""
 # cache.database=0
 
+
 # --------------------------------------------------------------------
 # Link
 # --------------------------------------------------------------------
 
-# link.base='http://127.0.0.1'
-# link.port.API=':8000/'
+# link.base=127.0.0.1
+# link.port.API=8000
 # link.port.WEB=':5500/'
+
+# --------------------------------------------------------------------
+# Path
+# --------------------------------------------------------------------
+
+# Folder.Upload.Path = "uploadFolder"

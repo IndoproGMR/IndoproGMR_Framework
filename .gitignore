@@ -19,6 +19,7 @@ public/vendor
 public/index-*
 
 tmp/*
+tmp/.gitkeep
 
 uploadFolder/*
 !uploadFolder/.gitkeep

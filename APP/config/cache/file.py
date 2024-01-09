@@ -10,7 +10,7 @@ class FileCache:
     def __init__(self, file_path, file_name):
         self.cache_file_path = Path(file_path) / file_name
 
-        if getenvval("cache.auto_clear") == "True":
+        if getenvval("cache.auto_clear", "False") == "True":
             # bila file sudah ada di maka hapus cache.json nya
             if os.path.exists(self.cache_file_path):
                 os.remove(self.cache_file_path)
