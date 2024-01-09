@@ -7,10 +7,10 @@ from .converter_Cache import convert_from_cache, convert_to_cache
 class RedisCache:
     def __init__(self):
         self.r = redis.Redis(
-            host=getenvval("cache.host"),  # type: ignore
-            port=getenvval("cache.port"),  # type: ignore
-            db=getenvval("cache.database"),  # type: ignore
-            password=getenvval("cache.password"),
+            host=getenvval("cache.host", "localhosth"),  # type: ignore
+            port=getenvval("cache.port", 6379),  # type: ignore
+            db=getenvval("cache.database", 0),  # type: ignore
+            password=getenvval("cache.password", ""),
         )
 
     def cache_get(self, key):

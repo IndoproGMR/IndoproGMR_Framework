@@ -22,7 +22,7 @@ async def saveFile(
             return False, None
 
     # Mengatur folder tempat menyimpan file
-    UPLOAD_FOLDER = Path(getenvval("Folder.Upload.Path"))  # type: ignore
+    UPLOAD_FOLDER = Path(getenvval("Folder.Upload.Path", "uploadFolder"))  # type: ignore
 
     if Path_FOLDER is None:
         # menggunakan default folder
