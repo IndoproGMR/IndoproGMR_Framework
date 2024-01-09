@@ -1,10 +1,22 @@
-import json
 import os
+import json
+from .converter_Cache import convert_from_cache, convert_to_cache
+from pathlib import Path
+
+from APP.config.dotenvfile import getenvval
 
 
 class FileCache:
-    def __init__(self, cache_file_path):
-        self.cache_file_path = cache_file_path
+    def __init__(self, file_path, file_name):
+        self.cache_file_path = Path(file_path) / file_name
+
+        if getenvval("cache.auto_clear") == "True":
+            # bila file sudah ada di maka hapus cache.json nya
+            if os.path.exists(self.cache_file_path):
+                os.remove(self.cache_file_path)
+
+        Path(file_path).mkdir(parents=True, exist_ok=True)
+        self.file_path = file_path
         self.cache_data = self.load_cache()
 
     def load_cache(self):
@@ -19,33 +31,23 @@ class FileCache:
         return cache_data
 
     def save_cache(self):
+        if os.path.exists(self.cache_file_path) is False:
+            Path(self.file_path).mkdir(parents=True, exist_ok=True)
+
         with open(self.cache_file_path, "w") as file:
             json.dump(self.cache_data, file, indent=2)
 
     def cache_get(self, key):
         result = self.cache_data.get(key)
         if result is not None:
-            result = self._convert_from_cache(result)
+            result = convert_from_cache(result)
         return result
-        # return self.cache_data.get(key)
 
     def cache_set(self, key, value, ttl=None):
-        # if not isinstance(value, str):
-        # value = json.dumps(value)
-        # self.cache_data[key] = value
-        # self.save_cache()
-        self.cache_data[key] = self._convert_to_cache(value)
+        self.cache_data[key] = convert_to_cache(value)
         self.save_cache()
 
     def cache_delete(self, key):
         if key in self.cache_data:
             del self.cache_data[key]
             self.save_cache()
-
-    def _convert_to_cache(self, value):
-        # Mengonversi nilai ke dalam bentuk yang sesuai untuk disimpan di cache
-        return json.dumps(value)
-
-    def _convert_from_cache(self, value):
-        # Mengonversi nilai dari bentuk yang disimpan di cache ke bentuk semula
-        return json.loads(value)

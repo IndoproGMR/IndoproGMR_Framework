@@ -1,25 +1,94 @@
 from APP.routers.baseRouter import *
-from APP.models import Occupation
+from APP.config.upload import saveFile
+
+from typing import Annotated, Union
+
+from helpers.testdemo import ohsit
+
+
+from APP.config.dependencies import get_token_header
+from fastapi import UploadFile, File, Depends
+
+
 from APP.config.cachemanager import create_cache
 
 cache_manager = create_cache()
 
+
+from pydantic import BaseModel, validator
+
+
 router = APIRouter(
     prefix="/test",
     tags=["test"],
-    responses={404: {"detail": "Not found"}},
-    dependencies=[],
+    responses={404: {"detail": "Not found"}},  # type: ignore
+    # dependencies=[Depends(get_token_header)],
 )
 
 
-@router.get("/", response_class=HTMLResponse)
+class Image(BaseModel):
+    url: str
+    name: str
+
+
+@router.post("/uploadfile")
+async def create_upload_file(detail_foto: str, file: UploadFile = File(...)):
+    status, saved_filename = await saveFile(file, Path_FOLDER="pdf/now")
+    if status:
+        return ApiRespond(
+            {"filename": saved_filename, "detail_foto": detail_foto},
+            code=200,
+            messages="berhasil",
+        )
+    else:
+        return ApiRespond({"filename": saved_filename}, code=500, messages="gagal")
+
+
+@router.post("/multiFiles")
+async def method_Upload(
+    files: Annotated[list[UploadFile], File()],
+):
+    for file in files:
+        status, saved_filename = await saveFile(file, Path_FOLDER="pdf/now")
+        if status is False:
+            return {"detail": "Upload Failed"}
+
+    return {"filename": "saved_filename"}
+
+
+class TestModelNama(BaseModel):
+    Nama: str
+
+
+@router.post("/nama")
+def method_name(
+    NamaLengkap: TestModelNama,
+    namaDepan: str,
+    namaBelakang: str,
+    namaTengah: Union[str, None] = None,
+    image: Union[Image, None] = None,
+):
+    return {
+        "respond": NamaLengkap,
+        "namaDepan": namaDepan,
+        "namaBelakang": namaBelakang,
+        "namaTengah": namaTengah,
+        "image": image,
+    }
+
+
+@router.get(
+    "/",
+    response_class=HTMLResponse,
+)
 def html(request: Request):
     data = [{"test": "isi data"}]
-    return view(request, "view/test.html", data)
+    return view(request, "views/test.html", data)
 
 
 @router.get("/aaa/{id}")
 async def root(id: str):
+    # return {"message": "hello world", "id": id, "x_token": x_token}
     return {"message": "hello world", "id": id}
 
 
@@ -33,32 +102,31 @@ def read_root(request: Request):
     return ApiRespond(result)
 
 
-@router.get("/oc")
-async def test():
-    data = {"a": "test1", "b": "test2", "c": "test3"}
-
-    # data = "aaaaaaaaaaa"
-
-    cache_manager.cache_set("test", data)
-    result = cache_manager.cache_get("test")
-    return result
-
-    # result_json = cache_manager.cache_get("test")
-
-    # if result_json is not None:
-    #     result = json.loads(result_json)
-    #     return result
-    # else:
-    #     return None
-
-    # Cacheset(key="test", value=data)
-    # Cacheset("test", "test")
-    # return Cacheget("test")
-    # if Cacheget("test") == "test":
-    # return "True"
-    # else:
-    # return "False"
-    # return
+@router.get("/request/{id}")
+async def test(
+    request: Request,
+    id: str,
+    namaDepan: str,
+    namaBelakang: str,
+    namaTengah: Union[str, None] = None,
+):
+    return {
+        "id": id,
+        "namaDepan": namaDepan,
+        "namaBelakang": namaBelakang,
+        "namaTengah": namaTengah,
+        "request": request.url.components,
+        "request4": request.cookies,
+        "request5": request.client,
+        "request6": request.headers,
+        "request7": ohsit(),
+    }
 
 
-# return Occupation.CountOccupation()
+@router.get("/cache")
+def cache():
+    cache_manager.cache_set("test1", ["test1", "test2", "test3"])
+    cache_manager.cache_set(
+        "test2", {"test1": "test2", "test3": ["test1", "test2", "test3"]}
+    )
+    return {"respond": cache_manager.cache_get("test2")}

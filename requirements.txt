@@ -1,8 +1,13 @@
 fastapi
-redis
-# types-redis
 uvicorn
-mysql
-pprint
-tkinter
-shutil
+redis
+python-dotenv
+Jinja2
+mysql-connector-python
+SQLAlchemy
+python-multipart
+
+# types-redis
+# tkinter
+# shutil
+# pprint
