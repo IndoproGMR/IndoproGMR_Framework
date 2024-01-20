@@ -126,11 +126,12 @@ async def test(
 
 @router.get("/cache")
 def cache():
-    cache_manager.cache_set("test1", ["test1", "test2", "test3"])
-    cache_manager.cache_set(
-        "test2", {"test1": "test2", "test3": ["test1", "test2", "test3"]}
-    )
-    return {"respond": cache_manager.cache_get("test2")}
+    # cache_manager.cache_set("test1", ["test1", "test2", "test3"])
+    # cache_manager.cache_set(
+    # "test2", {"test1": "test2", "test3": ["test1", "test2", "test3"]}
+    # )
+    # return {"respond": cache_manager.cache_get("test2")}
+    return {"respond": "asd"}
 
 
 @router.get("/throttle")
