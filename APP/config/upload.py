@@ -67,3 +67,15 @@ async def saveFile(
         print(e)
         # file.close()
         return False, None
+        
+        
+async def readFile(loc):
+    # Mengatur folder tempat menyimpan file
+    UPLOAD_FOLDER = Path(getenvval("Folder.Upload.Path", "uploadFolder"))  # type: ignore
+    # cek apakah file ada ?
+    if UPLOAD_FOLDER.joinpath(loc).exists():
+        # baca file
+        with UPLOAD_FOLDER.joinpath(loc).open("rb") as f:
+            return True, f.read()
+    else:
+        return False, None

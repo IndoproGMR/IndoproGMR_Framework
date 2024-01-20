@@ -4,22 +4,13 @@ __pycache__
 .pytest_cache
 .venv
 
-runapp
-
 etc/*
 !etc/.gitkeep
 log/*
 !log/.gitkeep
-web/dash
-web/vendor
-web/index-*
-
-public/dash
-public/vendor
-public/index-*
 
 tmp/*
-tmp/.gitkeep
+!tmp/.gitkeep
 
 uploadFolder/*
 !uploadFolder/.gitkeep

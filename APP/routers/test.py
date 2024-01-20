@@ -1,21 +1,17 @@
+from APP.config.View import view
+from pydantic import BaseModel
 from APP.routers.baseRouter import *
 from APP.config.upload import saveFile
-
 from typing import Annotated, Union
-
 from helpers.testdemo import ohsit
 
-
-from APP.config.dependencies import get_token_header
+from APP.dependencies.dependencies import get_token_header
 from fastapi import UploadFile, File, Depends
 
 
 from APP.config.cachemanager import create_cache
 
 cache_manager = create_cache()
-
-
-from pydantic import BaseModel, validator
 
 
 router = APIRouter(
@@ -83,7 +79,12 @@ def method_name(
 )
 def html(request: Request):
     data = [{"test": "isi data"}]
-    return view(request, "views/test.html", data)
+    return view(request, "test.html", data)
+
+
+@router.get("/method_html", response_class=HTMLResponse)
+async def method_html(request: Request):
+    return view(request)
 
 
 @router.get("/aaa/{id}")
@@ -130,3 +131,15 @@ def cache():
         "test2", {"test1": "test2", "test3": ["test1", "test2", "test3"]}
     )
     return {"respond": cache_manager.cache_get("test2")}
+
+
+@router.get("/throttle")
+@limiter.limit("10/minute")
+async def throttle(request: Request):
+    return {"message": "hello world"}
+
+
+@router.get("/throttleclass")
+@limiter.limit("10/minute")
+async def throttleclass(request: Request):
+    return {"msg": "Hello World"}

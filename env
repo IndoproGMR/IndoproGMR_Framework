@@ -23,6 +23,7 @@
 
 # cache.host="127.0.0.1"
 # cache.port=6379
+# cache.user=""
 # cache.password=""
 # cache.database=0
 

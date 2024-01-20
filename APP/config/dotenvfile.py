@@ -5,5 +5,5 @@ from dotenv import load_dotenv
 load_dotenv()
 
 
-def getenvval(name: str, default=None):
+def getenvval(name: str, default=""):
     return os.getenv(name, default)

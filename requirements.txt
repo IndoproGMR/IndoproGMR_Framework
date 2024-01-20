@@ -6,6 +6,7 @@ Jinja2
 mysql-connector-python
 SQLAlchemy
 python-multipart
+slowapi
 
 # types-redis
 # tkinter
