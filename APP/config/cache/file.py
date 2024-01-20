@@ -9,15 +9,18 @@ from APP.config.dotenvfile import getenvval
 class FileCache:
     def __init__(self, file_path, file_name):
         self.cache_file_path = Path(file_path) / file_name
+        try:
+            if getenvval("cache.auto_clear", "False") == "True":
+                # bila file sudah ada di maka hapus cache.json nya
+                if os.path.exists(self.cache_file_path):
+                    os.remove(self.cache_file_path)
 
-        if getenvval("cache.auto_clear", "False") == "True":
-            # bila file sudah ada di maka hapus cache.json nya
-            if os.path.exists(self.cache_file_path):
-                os.remove(self.cache_file_path)
-
-        Path(file_path).mkdir(parents=True, exist_ok=True)
-        self.file_path = file_path
-        self.cache_data = self.load_cache()
+            Path(file_path).mkdir(parents=True, exist_ok=True)
+            self.file_path = file_path
+            self.cache_data = self.load_cache()
+        except Exception as e:
+            print(e)
+            self.cache_data = {}
 
     def load_cache(self):
         if os.path.exists(self.cache_file_path):

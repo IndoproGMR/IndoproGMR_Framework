@@ -9,9 +9,9 @@ from APP.dependencies.dependencies import get_token_header
 from fastapi import UploadFile, File, Depends
 
 
-from APP.config.cachemanager import create_cache
+# from APP.config.cachemanager import create_cache
 
-cache_manager = create_cache()
+# cache_manager = create_cache()
 
 
 router = APIRouter(
