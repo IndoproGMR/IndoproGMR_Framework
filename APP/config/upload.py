@@ -59,7 +59,7 @@ async def saveFile(
 
     try:
         # Menyimpan file ke server
-        with file_path.open("wb") as buffer:
+        with file_path.open("wb", flush=True) as buffer:
             shutil.copyfileobj(file.file, buffer)
             # file.close()
         return True, filename
@@ -67,8 +67,8 @@ async def saveFile(
         print(e)
         # file.close()
         return False, None
-        
-        
+
+
 async def readFile(loc):
     # Mengatur folder tempat menyimpan file
     UPLOAD_FOLDER = Path(getenvval("Folder.Upload.Path", "uploadFolder"))  # type: ignore

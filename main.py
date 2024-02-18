@@ -5,6 +5,7 @@ import time
 
 # !add more Route
 from APP.routers import test
+from APP.routers import demo
 
 app = FastAPI(
     # docs_url=None,
@@ -12,12 +13,9 @@ app = FastAPI(
     responses={404: {"description": "Not found"}},
 )
 
-app.mount("/asset/css", StaticFiles(directory="public/css"),
-          name="css")  # type: ignore
-app.mount("/asset/js", StaticFiles(directory="public/js"),
-          name="js")  # type: ignore
-app.mount("/asset/img", StaticFiles(directory="public/img"),
-          name="img")  # type: ignore
+app.mount("/asset/css", StaticFiles(directory="public/css"), name="css")  # type: ignore
+app.mount("/asset/js", StaticFiles(directory="public/js"), name="js")  # type: ignore
+app.mount("/asset/img", StaticFiles(directory="public/img"), name="img")  # type: ignore
 
 app.add_middleware(
     CORSMiddleware,
@@ -30,6 +28,7 @@ app.add_middleware(
 
 # !Route
 app.include_router(test.router)
+app.include_router(demo.router)
 
 # !prosess time pada middleware
 

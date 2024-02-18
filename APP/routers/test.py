@@ -1,3 +1,4 @@
+from time import sleep
 from APP.config.View import view
 from pydantic import BaseModel
 from APP.routers.baseRouter import *
@@ -7,11 +8,6 @@ from helpers.testdemo import ohsit
 
 from APP.dependencies.dependencies import get_token_header
 from fastapi import UploadFile, File, Depends
-
-
-# from APP.config.cachemanager import create_cache
-
-# cache_manager = create_cache()
 
 
 router = APIRouter(
@@ -93,6 +89,9 @@ async def root(id: str):
     return {"message": "hello world", "id": id}
 
 
+from APP.config.log import LogProses
+
+
 @router.get("/api")
 def read_root(request: Request):
     result = {
@@ -100,6 +99,8 @@ def read_root(request: Request):
         "client_Port": request.client.port,  # type: ignore
         "request_url": request.url.path,
     }
+    LogProses("read test api:" + request.client.host)  # type: ignore
+    sleep(1)
     return ApiRespond(result)
 
 
@@ -134,6 +135,9 @@ def cache():
     return {"respond": "asd"}
 
 
+from APP.config.throttle import *
+
+
 @router.get("/throttle")
 @limiter.limit("10/minute")
 async def throttle(request: Request):
@@ -144,3 +148,23 @@ async def throttle(request: Request):
 @limiter.limit("10/minute")
 async def throttleclass(request: Request):
     return {"msg": "Hello World"}
+
+
+@router.get("/loadCache/{id}")
+def LoadCache(request: Request, id: str):
+    host = request.client.host  # type: ignore
+    text = f"read test api: {host} id:{id}"
+
+    array = ["a", "b", ["c1", "c2"], text]
+
+    # cache_manager.cache_set(id, text, 10)
+    # cache_manager.cache_set(f"array{id}", array)
+
+    # sleep(10)
+
+    dataCache = cache_manager.cache_get(id)
+    dataCache2 = cache_manager.cache_get(f"array{id}")
+
+    # cache_manager.cache_delete(id)
+
+    return {"message": dataCache, "array": dataCache2}

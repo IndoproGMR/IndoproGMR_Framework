@@ -1,39 +1,65 @@
 import pymysql
 import time
-
 from datetime import datetime
-
 
 from APP.config.conn import connect_to_mysql, close_mysql_connection
 
 
-def getDatabyQuery(connection, query: str, closedb=True):
-    # Sanitize query to prevent SQL injection
-    query = pymysql.escape_string(query)
+def getDatabyQuery(connection, query: str, value=None, closedb=True):
+    try:
+        # Membuat cursor
+        cursor = connection.cursor()
 
-    cursor = connection.cursor()
-    cursor.execute(query)
-    results = cursor.fetchall()
+        # Eksekusi query dengan nilai yang disediakan
+        cursor.execute(query, value)
 
-    # close connection
-    cursor.close()
+        # Commit perubahan ke database
+        results = cursor.fetchall()
 
-    if closedb:
-        close_mysql_connection(connection)
+        # close connection
+        cursor.close()
 
-    return results
+        if closedb:
+            # Menutup koneksi
+            close_mysql_connection(connection)
+
+        return results
+
+    except pymysql.Error as e:
+        print(f"Error during SELECT operation: {e}")
+        return None
 
 
-# !WIP
-def insertDatabyQuert(
+def insertDatabyQuery(
     connection,
     query: str,
+    values=None,
     closedb=True,
 ):
-    # Sanitize query to prevent SQL injection
-    query = pymysql.escape_string(query)
+    try:
+        # Membuat cursor
+        cursor = connection.cursor()
 
-    return False
+        # Eksekusi query dengan nilai yang disediakan
+        cursor.execute(query, values)
+
+        # Commit perubahan ke database
+        connection.commit()
+
+        # Menutup kursor
+        cursor.close()
+
+        if closedb:
+            # Menutup koneksi
+            close_mysql_connection(connection)
+
+        return True  # Berhasil melakukan operasi INSERT
+
+    except pymysql.Error as e:
+        print(f"Error during INSERT operation: {e}")
+        # Rollback perubahan jika terjadi kesalahan
+        connection.rollback()
+        return False  # Gagal melakukan operasi INSERT
 
 
 def getUnixTimeStamp():

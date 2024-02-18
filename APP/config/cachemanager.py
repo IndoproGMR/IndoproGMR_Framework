@@ -1,7 +1,9 @@
 from typing import Union
 
 from APP.config.dotenvfile import getenvval
+
 from APP.config.cache.file import FileCache
+
 from APP.config.cache.redis import RedisCache
 
 
@@ -14,7 +16,7 @@ def create_cache(cache_file_path: Union[str, None] = "tmp/cache/"):
     if cache_type == "redis":
         return RedisCache()
     elif cache_type == "file":
-        return FileCache(cache_file_path, "cache.json")
+        return FileCache(cache_file_path)
     else:
         raise ValueError(f"Invalid cache type: {cache_type}")
 
@@ -29,3 +31,6 @@ def cache_set(self, key, value, ttl=None):
 
 def cache_delete(self, key):
     self.cache.cache_delete(key)
+
+
+cache_manager = create_cache()
