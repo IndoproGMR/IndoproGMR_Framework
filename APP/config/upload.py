@@ -1,3 +1,8 @@
+# vim:fileencoding=utf-8:foldmethod=marker
+
+# System {{{
+
+
 from typing import Union
 from pathlib import Path
 from APP.config.dotenvfile import getenvval
@@ -22,7 +27,7 @@ async def saveFile(
             return False, None
 
     # Mengatur folder tempat menyimpan file
-    UPLOAD_FOLDER = Path(getenvval("Folder.Upload.Path", "uploadFolder"))  # type: ignore
+    UPLOAD_FOLDER = Path(getenvval("Folder.Upload.Path", "SpecialDir/UploadDir"))  # type: ignore
 
     if Path_FOLDER is None:
         # menggunakan default folder
@@ -79,3 +84,6 @@ async def readFile(loc):
             return True, f.read()
     else:
         return False, None
+
+
+# }}}

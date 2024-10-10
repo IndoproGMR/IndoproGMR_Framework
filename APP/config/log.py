@@ -1,27 +1,31 @@
+# vim:fileencoding=utf-8:foldmethod=marker
+
+# System {{{
+
 # LOG
-from fastapi import BackgroundTasks
-import datetime
-from APP.config.dotenvfile import getenvval
+from APP.config.dotenvfile import GetEnv
+from APP.config.util import Get_time_now
 
 
-def LogProses(data: str):
+def LogProses(data: str, forcePrint=False):
     try:
-        writeToLog(data)
-        if getenvval("Log.print", "False") == "True":
-            print(data)
+        current_time = Get_time_now("%H:%M:%S.%f")
+        LogName = Get_time_now("%Y-%m-%d")
+        content_data = f"{current_time}: {data}\n"
+
+        # print log ke console
+        if GetEnv("Log_print", "False").str() == "True" or forcePrint:
+            print(content_data)
+
+        try:
+            with open(f"log/{LogName}.log", mode="a") as file:
+                file.write(content_data)
+
+        except Exception as e:
+            print(f"gagal menyimpan Log. isi LOG:\n{data}")
+
     except Exception as e:
         print(f"Error writing to log: {e}")
 
 
-def writeToLog(data):
-    # Waktu sekarang dalam format yang mudah dibaca manusia
-    current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    LogName = datetime.datetime.now().strftime("%Y-%m-%d")
-
-    with open(
-        f"log/{LogName}.log", mode="a"
-    ) as logFile:  # Gunakan mode "a" untuk menambahkan log ke file yang ada
-        content = (
-            f"{current_time}: {data}\n"  # Menambahkan data yang akan dicatat dalam log
-        )
-        logFile.write(content)
+# }}}

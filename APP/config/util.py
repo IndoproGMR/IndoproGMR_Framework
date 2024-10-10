@@ -1,3 +1,8 @@
+# vim:fileencoding=utf-8:foldmethod=marker
+
+# System {{{
+
+from datetime import datetime
 import random
 import string
 import hashlib
@@ -21,3 +26,17 @@ def Gen_Random_UUID(hex=False):
         return uuid.uuid4().hex
     else:
         return str(uuid.uuid4())
+
+
+def Get_time_now(timeFormat: str = "%Y-%m-%d %H:%M:%S"):
+    # https://www.programiz.com/python-programming/datetime/strftime
+    return datetime.now().strftime(timeFormat)
+
+
+# }}}
+
+# userCode {{{
+
+# Your code Here
+
+# }}}

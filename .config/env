@@ -1,0 +1,125 @@
+# vim:fileencoding=utf-8:foldmethod=marker
+
+# System {{{
+
+# --------------------------------------------------------------------
+# Hapus '#' terlebih darhulu untuk mengaktifkan variable
+# --------------------------------------------------------------------
+
+# --------------------------------------------------------------------
+# Plugins{{{
+# --------------------------------------------------------------------
+
+# Plugin_RunOnVersel = "False"
+# Plugin_Tailwind = "False"
+# Plugin_Docker = "False"
+
+# }}}
+
+# --------------------------------------------------------------------
+# DATABASE{{{
+# --------------------------------------------------------------------
+
+
+# database_type = "sqlite"
+# database_type = "mysql+pymysql"
+# database_type = "postgresql"
+
+# database_URL = "Link database"
+
+# database_host = "link database"
+# database_user = "nama user database"
+# database_password = "password database"
+# database_name = "Nama database"
+
+# }}}
+
+# --------------------------------------------------------------------
+# Cache{{{
+# --------------------------------------------------------------------
+
+# cache_bypass ="True"
+
+# cache_type = "redis"
+# cache_type = "file"
+
+# cache_auto_clear = "True" # untuk cache_type = file
+# cache_auto_clear = "False" # untuk cache_type = file
+
+# cache_host = "127.0.0.1"
+# cache_port = 6379
+# cache_user = ""
+# cache_password = ""
+# cache_database = 0
+# cache_redis_uri = "redis://localhost:@127.0.0.1:6379/0"
+# redis://127.0.0.1:6379/0
+
+# }}}
+
+# --------------------------------------------------------------------
+# Link{{{
+# --------------------------------------------------------------------
+
+# link_base = 127.0.0.1
+# link_port_API = 8000
+# link_port_WEB = ':5500/'
+
+# }}}
+
+# --------------------------------------------------------------------
+# File{{{
+# --------------------------------------------------------------------
+
+# File_SafeDelete = "True"
+# File_CleamTmpOnBoot = "False"
+# File_recyclebin = "SpecialDir/recyclebin"
+
+# }}}
+
+# --------------------------------------------------------------------
+# Log{{{
+# --------------------------------------------------------------------
+
+# Log_print = "True"
+
+# }}}
+
+# --------------------------------------------------------------------
+# OpenAI{{{
+# --------------------------------------------------------------------
+
+# OpenAI_Key = "SK-OpenAI Key"
+
+# }}}
+
+# --------------------------------------------------------------------
+# Versel key{{{
+# --------------------------------------------------------------------
+
+# BLOB_READ_WRITE_TOKEN = "key"
+
+# KV_URL = "redis://"
+# KV_REST_API_URL = "https://"
+# KV_REST_API_TOKEN = "Api Token"
+# KV_REST_API_READ_ONLY_TOKEN = "Api Token RO"
+
+# POSTGRES_URL = "postgres://default:xwH5zFqPYh4e@ep-snowy-frog-a1vfqd92-pooler.ap-southeast-1.aws.neon.tech:5432/verceldb?sslmode=require"
+# POSTGRES_PRISMA_URL = "postgres://default:xwH5zFqPYh4e@ep-snowy-frog-a1vfqd92-pooler.ap-southeast-1.aws.neon.tech:5432/verceldb?sslmode=require&pgbouncer=true&connect_timeout=15"
+# POSTGRES_URL_NO_SSL = "postgres://default:xwH5zFqPYh4e@ep-snowy-frog-a1vfqd92-pooler.ap-southeast-1.aws.neon.tech:5432/verceldb"
+# POSTGRES_URL_NON_POOLING = "postgres://default:xwH5zFqPYh4e@ep-snowy-frog-a1vfqd92.ap-southeast-1.aws.neon.tech:5432/verceldb?sslmode=require"
+# POSTGRES_USER = "default"
+# POSTGRES_HOST = "ep-snowy-frog-a1vfqd92-pooler.ap-southeast-1.aws.neon.tech"
+# POSTGRES_PASSWORD = "xwH5zFqPYh4e"
+# POSTGRES_DATABASE = "verceldb"
+
+# }}}
+
+# --------------------------------------------------------------------
+# HealthCheck{{{
+# --------------------------------------------------------------------
+
+# HealthCheckENV = "thisValue"
+
+# }}}
+
+# }}}

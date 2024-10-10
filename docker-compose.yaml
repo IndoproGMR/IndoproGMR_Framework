@@ -1,0 +1,60 @@
+# version: "3.8"
+services:  
+  app:    
+    build: .
+    # command: ["sleep","15s",";","sh -c","uvicorn main:app --reload --port=8000 --host=0.0.0.0"]
+    command: sh -c "sleep 15s; uvicorn main:app --reload --port=8000 --host=0.0.0.0"
+    # command: sh -c "uvicorn main:app --reload --port=8000 --host=0.0.0.0"
+    # command: ["fastapi", "dev", "--proxy-headers", "--port", "8000"]
+    # command: sh -c "fastapi dev --proxy-headers --port 8000"
+    ports:      
+      - 8000:8000
+    environment:   
+      - ENV_FILE=.env
+      - Plugin_Docker=True
+      - REDIS_HOST=redis
+      - REDIS_PORT=6380
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3307
+    volumes:      
+      - .:/dockerAPP
+    depends_on:
+      - redis
+      # - mysql
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+
+  redis:
+    image: redis:7.4
+    command: ["redis-server", "--bind","0.0.0.0", "--port", "6380"]
+    ports:
+      - 6380:6380
+    healthcheck:
+      test: ["CMD", "redis-cli","-h", "127.0.0.1","-p","6380", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+
+  # mysql:
+  #   image: mysql:8.0
+  #   command: ["mysqld","--bind-address","0.0.0.0","--port","3307"]
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: dockerRoot
+  #     MYSQL_DATABASE: dockerRootDB
+  #     MYSQL_USER: dockerRoot
+  #     MYSQL_PASSWORD: dockerRoot
+  #   ports:
+  #     - 3307:3307
+  #   volumes:
+  #     - ./SpecialDir/MySQLdb/db:/docker-entrypoint-initdb.d
+  #   healthcheck:
+  #     test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 5
+

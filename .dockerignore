@@ -1,4 +1,3 @@
-# System {{{
 __pycache__
 .env
 .vscode
@@ -30,10 +29,3 @@ SpecialDir/*
 **.zip
 **.rar
 
-# }}}
-
-# userCode {{{
-
-# Your gitignore
-
-# }}}

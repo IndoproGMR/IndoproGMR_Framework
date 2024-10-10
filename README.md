@@ -11,8 +11,13 @@ pip install -r requirements.txt
 3. jalankan server uvicorn 
 
 ```bash
-uvicorn main:app --reload
+# uvicorn main:app --reload
 ```
+atau jalankan fastapi
+```bash
+fastapi dev
+```
+
 
 4. buka localhost:8000
 

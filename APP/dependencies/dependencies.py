@@ -1,7 +1,16 @@
+# vim:fileencoding=utf-8:foldmethod=marker
+
+# System {{{
+
 from typing import Annotated
 from fastapi import Header, HTTPException, Request
 
-from APP.config.cachemanager import cache_manager
+# from APP.config.cachemanager import cache_manager
+# from APP.config.manager.cachemanager import cache_manager
+
+from APP.config.manager import cachemanager
+
+cache_manager = cachemanager.create()
 
 # cache_manager = create_cache()
 
@@ -33,3 +42,6 @@ async def get_token_request(request: Request):
         raise HTTPException(status_code=400, detail="No X-token cookie provided")
 
     return token
+
+
+# }}}
