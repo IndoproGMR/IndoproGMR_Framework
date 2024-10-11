@@ -19,7 +19,10 @@ from fastapi.responses import StreamingResponse
 
 from APP.config.dotenvfile import GetEnv
 from APP.config.log import LogProses
-from APP.config.util import Get_time_now
+
+# from APP.config.util import Get_time_now
+
+from APP.config.utility.util import Get_time_now
 
 
 from .BaseDriver import BaseDriver

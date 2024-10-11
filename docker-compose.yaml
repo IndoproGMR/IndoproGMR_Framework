@@ -3,8 +3,8 @@ services:
   app:    
     build: .
     # command: ["sleep","15s",";","sh -c","uvicorn main:app --reload --port=8000 --host=0.0.0.0"]
-    command: sh -c "sleep 15s; uvicorn main:app --reload --port=8000 --host=0.0.0.0"
-    # command: sh -c "uvicorn main:app --reload --port=8000 --host=0.0.0.0"
+    # command: sh -c "sleep 15s; uvicorn main:app --reload --port=8000 --host=0.0.0.0"
+    command: sh -c "uvicorn main:app --reload --port=8000 --host=0.0.0.0"
     # command: ["fastapi", "dev", "--proxy-headers", "--port", "8000"]
     # command: sh -c "fastapi dev --proxy-headers --port 8000"
     ports:      
@@ -22,10 +22,11 @@ services:
       - redis
       # - mysql
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
-      interval: 30s
+      test: ["CMD-SHELL", "curl -f http://127.0.0.1:8000/health || exit 1"]
+      interval: 120s
       timeout: 10s
       retries: 3
+      start_period: 30s
 
 
   redis:
@@ -35,9 +36,10 @@ services:
       - 6380:6380
     healthcheck:
       test: ["CMD", "redis-cli","-h", "127.0.0.1","-p","6380", "ping"]
-      interval: 30s
+      interval: 120s
       timeout: 10s
       retries: 3
+      start_period: 30s
 
 
   # mysql:
@@ -54,7 +56,8 @@ services:
   #     - ./SpecialDir/MySQLdb/db:/docker-entrypoint-initdb.d
   #   healthcheck:
   #     test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-  #     interval: 30s
+  #     interval: 120s
   #     timeout: 10s
   #     retries: 5
+  #     start_period: 30s
 

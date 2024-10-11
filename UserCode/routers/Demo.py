@@ -1,7 +1,9 @@
+from datetime import datetime
 import io
 import json
 from fastapi.responses import StreamingResponse
 from sqlalchemy import true
+
 
 from .baseRouter import *
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -137,8 +139,38 @@ def reqOutSide():
     return {"message": datarespon}
 
 
-
 @router.get("/testEnv")
 def testEnv():
     print(GetEnv("asd"))
+    return {"message": "hello world"}
+
+
+from APP.config.utility.humanTime import GetTimeNow
+
+
+@router.get("/testTime")
+def gettimeini():
+    # print(f"jalankan data {Get_time_by(by=timeBy.humanreadble)}")
+    GetTimeNow().addOffset(7)
+    data = f"""=== === === === === === === === === === === === === === ===
+    waktu sekarang: {GetTimeNow().Human().getResult()}
+    waktu sekarang +7: {GetTimeNow().addOffset(7).Human().getResult()}
+    waktu +10 jam : {GetTimeNow().addTime(10,"H").getResult()}
+    waktu +4+4 jam +10 menit: {GetTimeNow().addTime(4,"H").Human().addTime(10,"M").addTime(4,"H").getResult()}
+    waktu Timestamp: {GetTimeNow().Timestamp(False).getResult()}
+
+=== === === === === === === === === === === === === === ===
+"""
+
+    # print(GetTimeNow().addTime(10,"H").Human().getResult())
+    print(data)
+
+    # print(datetime.tzinfo)
+
+    return {"message": data}
+
+
+@router.get("/addTime")
+def addTimeini():
+    GetTimeNow().addOffset(5)
     return {"message": "hello world"}

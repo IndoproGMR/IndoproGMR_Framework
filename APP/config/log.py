@@ -4,7 +4,10 @@
 
 # LOG
 from APP.config.dotenvfile import GetEnv
-from APP.config.util import Get_time_now
+
+# from APP.config.util import Get_time_now
+
+from APP.config.utility.util import Get_time_now
 
 
 def LogProses(data: str, forcePrint=False):

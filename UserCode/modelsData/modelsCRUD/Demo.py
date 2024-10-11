@@ -3,7 +3,9 @@ from .baseCrud import *
 from UserCode.modelsData.modelsTable import Demo as mTDemo
 from UserCode.modelsData.modelsSchemas import Demo as mSDemo
 
-from APP.config.testPurposes import simulasi
+# from APP.config.testPurposes import simulasi
+
+from APP.config.utility import simulasi
 
 
 def createUser(db: Session, user: mSDemo.user_update):

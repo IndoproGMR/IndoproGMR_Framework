@@ -2,7 +2,10 @@ FROM python:3.11-slim
 
 WORKDIR /dockerAPP
 
-COPY .config/requirements.txt /dockerAPP/requirements.txt
+# Install curl
+RUN apt-get update && apt-get install -y curl
+
+COPY requirements.txt /dockerAPP/requirements.txt
 
 RUN pip install --no-cache-dir -r /dockerAPP/requirements.txt
 

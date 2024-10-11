@@ -1,6 +1,6 @@
 # vim:fileencoding=utf-8:foldmethod=marker
 
-# System {{{
+# System {
 
 
 from APP.config.log import LogProses
@@ -11,7 +11,17 @@ from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.exceptions import HTTPException
 
 from APP.config.dotenvfile import GetEnv
-from APP.config.util import Gen_Random_sha256, Gen_Random_string, Gen_Random_int
+
+# from APP.config.util import Gen_Random_sha256, Gen_Random_string, Gen_Random_int
+
+from APP.config.utility.randomGen import (
+    Gen_Random_sha256,
+    Gen_Random_int,
+    Gen_Random_string,
+    Gen_Random_UUID,
+)
+
+from APP.config.utility.util import Get_time_now
 
 
 # INFO UPDATE PATH
@@ -21,8 +31,8 @@ from APP.config.util import Gen_Random_sha256, Gen_Random_string, Gen_Random_int
 # PATH_LOG = Path("log")
 
 
-def redirect_url(url: str):
-    return RedirectResponse(url, status_code=status.HTTP_303_SEE_OTHER)
+def redirect_url(url: str, statusCode=status.HTTP_301_MOVED_PERMANENTLY):
+    return RedirectResponse(url, status_code=statusCode)
 
 
 # }}}
