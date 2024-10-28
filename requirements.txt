@@ -1,13 +1,32 @@
-fastapi
+# vim:fileencoding=utf-8:foldmethod=marker
+
+# System {{{
+fastapi[standard]
 uvicorn
-redis
+slowapi
 python-dotenv
 Jinja2
-mysql-connector-python
 SQLAlchemy
 python-multipart
+aiofiles
+apscheduler
+# vercel_blob
+pymysql
+PyMySQL[rsa]
+# }}}
 
+# userCode {{{
+redis
+slowapi
+httpx
+# apscheduler
+
+# vercel_blob
 # types-redis
 # tkinter
 # shutil
 # pprint
+
+# }}}
+
+

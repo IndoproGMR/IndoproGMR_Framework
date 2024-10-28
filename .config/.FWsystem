@@ -1,0 +1,116 @@
+{
+  "Version": {
+    "FWBase": "005",
+    "FWSystem": "001"
+  },
+  "Can": {
+    "root": [
+      "APIFramework.py",
+      "env",
+      "IpG_framework.py",
+      "LICENSE",
+      "main.py",
+      "requirements.txt",
+      "snippets.json",
+      "vercel.json",
+      ".FWsystem",
+      ".gitignore"
+    ],
+
+    "APP":[
+      ".gitkeep"
+    ],
+    "APP/config": [
+      "cachemanager.py",
+      "conn.py",
+      "dotenvfile.py",
+      "filemanager.py",
+      "__init__.py",
+      "log.py",
+      "ResponseStandardization.py",
+      "throttle.py",
+      "upload.py",
+      "util.py",
+      "View.py",
+      "websockets.py"
+    ],
+    "APP/config/cache": [
+      "converter_Cache.py",
+      "file_Driver.py",
+      "kv_Driver.py",
+      "redis_Driver.py"
+    ],
+    "APP/config/filesave": [
+      "local_Driver.py",
+      "Versel_blob_Driver.py"
+    ],
+    "APP/dependencies": [
+      "dependencies.py"
+    ],
+    "APP/models": [
+      "baseModel.py",
+      "Demo.py",
+      "__init__.py"
+    ],
+    "APP/routers": [
+      "baseRouter.py",
+      "demo.py",
+      "httpException.py",
+      "__init__.py",
+      "test.py"
+    ],
+    "APP/template": [
+      "apirouter.py",
+      "model.py",
+      "view.html"
+    ],
+
+    "helpers": [
+      "__init__.py",
+      "Demo.py"
+    ],
+    "log":[
+      ".gitkeep"
+    ],
+    
+    "public": [
+      ".gitkeep"
+    ],
+    "public/views": [
+      ".gitkeep"
+    ],
+    "public/Template": [
+      ".gitkeep"
+    ],
+    "public/css": [
+      ".gitkeep"
+    ],
+    "public/img": [
+      ".gitkeep"
+    ],
+    "public/js": [
+      ".gitkeep"
+    ],
+    
+    "SpecialDir": [
+      ".gitkeep"
+    ],
+    "tests": [
+      ".gitkeep",
+      "cache.py"
+    ],
+    "tmp": [
+      ".gitkeep"
+    ],
+    "uploadFolder": [
+      ".gitkeep"
+    ]
+  },
+
+  "Cant": {
+    "root": [
+      ".env",
+      "README.md"
+    ]
+  }
+}

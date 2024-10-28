@@ -1,3 +1,8 @@
+# vim:fileencoding=utf-8:foldmethod=marker
+
+# System {{{
+
+
 from fastapi import WebSocket, APIRouter
 
 router = APIRouter()
@@ -9,3 +14,5 @@ router = APIRouter()
 #     while True:
 #         data = await websocket.receive_text()
 #         await websocket.send_text(f"Message received: {data}")
+
+# }}}

@@ -1,0 +1,155 @@
+{
+  "cacheInit": {
+    "prefix": "IFCaInit",
+    "body": [
+      "from APP.config.cachemanager import create_cache",
+      "",
+      "cache_manager = create_cache()"
+    ],
+    "description": "Setup cache manager"
+  },
+  "cacheGet": {
+    "prefix": "IFCaGet",
+    "body": [
+      "cache_manager.cache_get('${1:key}')"
+    ],
+    "description": "Get cache value"
+  },
+  "cacheSet": {
+    "prefix": "IFCaSet",
+    "body": [
+      "cache_manager.cache_set('${1:key}', ${2:value})"
+    ],
+    "description": "Set cache value"
+  },
+  "cacheDelete": {
+    "prefix": "IFCaDel",
+    "body": [
+      "cache_manager.cache_delete('${1:key}')"
+    ],
+    "description": "Delete cache value"
+  },
+  "Model method": {
+    "prefix": "IFMODEL",
+    "body": [
+      "def ${1:Demo_Model}():",
+      "    db = connect_to_mysql()",
+      "    if db:",
+      "        query = \"$2\"",
+      "        ",
+      "        results = getDatabyQuery(db, query)",
+      "        ",
+      "        return results"
+    ],
+    "description": "Model method"
+  },
+  "Route init": {
+    "prefix": "IFRInit",
+    "body": [
+      "from APP.routers.baseRouter import *",
+      "",
+      "router = APIRouter(",
+      "    ${1:#}prefix=\"/$2\",",
+      "    tags=[\"${3:demo}\"],",
+      ")"
+    ],
+    "description": "Init the route"
+  },
+  "Route Get": {
+    "prefix": "IFRG",
+    "body": [
+      "@router.get(\"/\")",
+      "def method_name():",
+      "    return {\"message\": \"hello world\"}"
+    ],
+    "description": "Get the route"
+  },
+  "Route Post": {
+    "prefix": "IFRP",
+    "body": [
+      "@router.post(\"/\")",
+      "def method_name():",
+      "    return {\"message\": \"hello world\"}"
+    ],
+    "description": "Post the route"
+  },
+  "async Route Get": {
+    "prefix": "IFRGA",
+    "body": [
+      "@router.get(\"/\")",
+      "async def method_name():",
+      "    return {\"message\": \"hello world\"}"
+    ],
+    "description": "Get the route with async"
+  },
+  "async Route Post": {
+    "prefix": "IFRPA",
+    "body": [
+      "@router.post(\"/\")",
+      "async def method_name():",
+      "    return {\"message\": \"hello world\"}"
+    ],
+    "description": "Post the route with async"
+  },
+  "Upload File init": {
+    "prefix": "IFRUPLInit",
+    "body": [
+      "from fastapi import UploadFile",
+      "from APP.config.upload import saveFile"
+    ],
+    "description": "Setup for Upload File"
+  },
+  "Upload File": {
+    "prefix": "IFRUPL",
+    "body": [
+      "@router.post(\"/\")",
+      "async def method_Upload(file: UploadFile):",
+      "    status, saved_filename = await saveFile(file)",
+      "    if status:",
+      "        return {\"filename\": saved_filename}",
+      "    else:",
+      "        return {\"detail\":\"Upload Failed\"}"
+    ],
+    "description": "Upload File Method"
+  },
+  "View get": {
+    "prefix": "IFRGView",
+    "body": [
+      "@router.get(\"/$1\",response_class=HTMLResponse)",
+      "async def method_html(request: Request):",
+      "    return view(request,\"views/index.html\")"
+    ],
+    "description": "setup for views get"
+  },
+  "View post": {
+    "prefix": "IFRPView",
+    "body": [
+      "@router.post(\"/$1\",response_class=HTMLResponse)",
+      "async def method_html(request: Request):",
+      "    return view(request,\"views/index.html\")"
+    ],
+    "description": "setup for views post"
+  },
+  "Code System":{
+  	"prefix": "CodeSys",
+ 	"body":[
+  	  "# System {{{",
+  	  "",
+  	  "# }}}"
+  	]
+  },
+  "Code User":{
+  	"prefix": "CodeUser",
+ 	"body":[
+  	  "# userCode {{{",
+  	  "# Your Code Here",
+  	  "# }}}"
+  	]
+  },
+  "Code Collabs":{
+  	"prefix":"codemarker",
+  	"body":[
+  	  "# vim:fileencoding=utf-8:foldmethod=marker"
+  	]
+  }
+}

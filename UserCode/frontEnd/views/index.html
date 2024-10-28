@@ -1,0 +1,45 @@
+{% extends "Template/layout.html" %}
+{% block content %}
+<a href=""></a>
+
+
+<h1>Index Page</h1>
+<br>
+<a href="">{{ data.RanCode }}</a>
+<br>
+<a href="{{ url_for('img',path='/favicon.ico') }}">img</a>
+<br>
+{{ url_for('img',path='/asd.img') }}
+<br>
+<br>
+
+<img src="http://127.0.0.1:8000/readFile" alt="">
+
+<br>
+<br>
+<button onclick="runfet()" >Set Cache</button>
+<br>
+<button onclick="GetCache()">Get Cache</button>
+
+<p>respond dari server: <span id="respondDariServer">None</span></p>
+
+<script src="{{ url_for('js',path='/testa.js') }}"></script>
+<script src="{{ url_for('js',path='/API_lib.js') }}"></script>
+
+<script>
+  const api_facthe = new API_lib("http://127.0.0.1:8000/cache")
+
+  async function runfet(){
+    SetText("mengambil data")
+    let data = await api_facthe.get("createDataCache")
+    SetText(data.message)
+
+
+    console.log(data.message);
+  }
+
+</script>
+
+{% endblock %}
+
+
