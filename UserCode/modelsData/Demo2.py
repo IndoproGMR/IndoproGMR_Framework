@@ -1,7 +1,3 @@
-# vim:fileencoding=utf-8:foldmethod=marker
-
-# System {{{
-
 from .baseModel import *
 
 
@@ -50,10 +46,3 @@ def DemoUpdate(data):
 
         results = insertDatabyQuery(db, query, values)
         return results
-
-
-# }}}
-
-# userCode {{{
-# Your Code Here
-# }}}

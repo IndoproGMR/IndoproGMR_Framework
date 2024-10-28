@@ -1,5 +1,8 @@
 # IndoproGMR-FrameWork
 
+docker ready
+
+
 First setup
 1. install requirements
 ```bash
@@ -22,3 +25,7 @@ fastapi dev
 4. buka localhost:8000
 
 5. install extension [IndoproGMR FrameWork](https://marketplace.visualstudio.com/items?itemName=IndoproGMR.indoprogmr-framework) (Sangat Rekomendasi)
+
+
+
+[Start First Project](/.config/doc/starter.md)

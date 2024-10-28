@@ -35,8 +35,4 @@ def Get_time_now(timeFormat: str = "%Y-%m-%d %H:%M:%S"):
 
 # }}}
 
-# userCode {{{
 
-# Your code Here
-
-# }}}
