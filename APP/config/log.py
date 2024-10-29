@@ -1,8 +1,3 @@
-# vim:fileencoding=utf-8:foldmethod=marker
-
-# System {{{
-
-# LOG
 from APP.config.dotenvfile import GetEnv
 
 # from APP.config.util import Get_time_now
@@ -29,6 +24,3 @@ def LogProses(data: str, forcePrint=False):
 
     except Exception as e:
         print(f"Error writing to log: {e}")
-
-
-# }}}
