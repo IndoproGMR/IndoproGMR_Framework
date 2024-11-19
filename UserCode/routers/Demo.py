@@ -174,3 +174,35 @@ def gettimeini():
 def addTimeini():
     GetTimeNow().addOffset(5)
     return {"message": "hello world"}
+
+
+@router.get("/testDebug")
+def testdebug():
+    debugProses("router berjalan")
+
+    print(GetEnv("aaa", "asd").is_("aa"))
+
+    return {"message": "hello world"}
+
+
+@router.get("/createFolder/{test}")
+def createFolder(test: str):
+    globalFileProses.SaveFolder(f"tmp/test/createFolder/{test}")
+    # print(f"start saving file: {test}")
+
+    # await start_async_heavy_process()
+    # await start_heavy_process()
+    # start_heavy_process()
+
+    # await asyncio.to_thread(fileproses.SaveFolder, f"tmp/test/createFolder/{test}")
+
+    # print(f"save file done: {test}")
+    # print(f"start proses berat: {test}")
+
+    # await start_async_heavy_process()
+    # await start_heavy_process()
+    # start_heavy_process()
+
+    # print(f"proses berat selesai: {test}")
+
+    return {"message": "hello world"}

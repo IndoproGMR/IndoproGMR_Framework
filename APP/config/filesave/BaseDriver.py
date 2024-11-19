@@ -30,8 +30,13 @@ class BaseDriver(ABC):
 
     @abstractmethod
     async def SaveFile(
-        self, file, file_name: str, file_path: str = "", filter_types=[]
-    ):
+        self,
+        file,
+        file_name: str,
+        file_path: str = "",
+        filter_types=[],
+        save_mode: str = "wb",
+    ) -> bool:
         pass
 
     @abstractmethod

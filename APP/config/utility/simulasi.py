@@ -1,9 +1,9 @@
+import asyncio
 import time
 import concurrent.futures
 from math import factorial
-import sys
 
-sys.set_int_max_str_digits(10**6)
+from sqlalchemy.engine import result
 
 
 # Simulasi tugas berat (misalnya perhitungan besar)
@@ -33,3 +33,28 @@ def start_heavy_process():
                 # print(f"Hasil: {result}")
             except Exception as e:
                 print(f"Error dalam proses: {e}")
+
+
+async def async_heavy_process():
+    # Menjalankan beberapa tugas berat secara bersamaan menggunakan asyncio.to_thread
+    tasks = [
+        asyncio.to_thread(heavy_computation, n) for n in [600_000, 700_000, 800_000]
+    ]
+
+    results = await asyncio.gather(*tasks)
+
+    for result in results:
+        pass
+
+    # # Menunggu semua tugas selesai dan mengambil hasilnya
+    # for task in asyncio.as_completed(tasks):
+    #     try:
+    #         result = await task  # Menunggu dan mengambil hasil perhitungan
+    #         # print(f"Hasil: {result}")
+    #     except Exception as e:
+    #         print(f"Error dalam proses: {e}")
+
+
+# Fungsi utama async untuk menjalankan simulasi
+def start_async_heavy_process():
+    asyncio.run(async_heavy_process())

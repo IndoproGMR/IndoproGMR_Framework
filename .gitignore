@@ -6,6 +6,7 @@ __pycache__
 .venv
 .mypy_cache
 .null-ls*
+.config/env/*
 
 node_modules
 package.json

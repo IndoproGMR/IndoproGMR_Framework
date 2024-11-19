@@ -1,9 +1,9 @@
 # vim:fileencoding=utf-8:foldmethod=marker
 
-# System {
+# System {{{
 
 
-from APP.config.log import LogProses
+from APP.config.log import LogProses, debugProses
 
 from pathlib import Path
 from fastapi import APIRouter, Request, Response, status
@@ -47,9 +47,9 @@ from APP.config.manager import cachemanager
 
 cache_manager = cachemanager.create()
 
-from APP.config.manager import filemanager
+# from APP.config.manager import filemanager
 
-fileproses = filemanager.create("")
+# globalFileProses = filemanager.create("tmp")
 
 
 # DataBase Connections

@@ -1,22 +1,15 @@
-# vim:fileencoding=utf-8:foldmethod=marker
-
-# System {{{
-
-
 import asyncio
 import datetime
 import os
 import json
-from pathlib import Path
 
 
 from .converter_Cache import convert_from_cache, convert_to_cache
 from APP.config.dotenvfile import GetEnv
-from APP.config.log import LogProses
+from APP.config.log import LogProses, debugProses
 
 from APP.config.manager import filemanager
 
-# file_path = GetEnv("cache_local_path", "tmp/cache").str()
 
 fileproses = filemanager.create("")
 
@@ -25,91 +18,56 @@ class FileCache:
     def __init__(self):
         file_path = GetEnv("cache_local_path", "tmp/cache").str()
 
-        # file_path = "tmp/cache/"
+        self.file_path = file_path
 
-        self.cache_file_path = Path(file_path)
+        if GetEnv("cache_auto_clear", "False").is_("True"):
+            try:
+                # await fileproses.DeleteFolder(f"{file_path}/*")
+                asyncio.create_task(fileproses.DeleteFolder(f"{file_path}/*"))
+
+            except Exception as e:
+                LogProses(f"Error during cache init: {e}")
+
         try:
+            self.cache_file_path = file_path
+            # await fileproses.SaveFolder(file_path)
             asyncio.create_task(fileproses.SaveFolder(file_path))
-
-            # Path(file_path).mkdir(parents=True, exist_ok=True)
-            self.file_path = file_path
-            if GetEnv("cache.auto_clear", "False").str() != "True":
-                try:
-                    asyncio.create_task(fileproses.DeleteFolder(f"{file_path}/*"))
-
-                    # Hapus folder cache jika sudah ada
-                    # if os.path.exists(self.cache_file_path):
-                    #     num_deleted_files = self.clear_cache_folder()
-                    #     LogProses(
-                    #         f"{num_deleted_files} files deleted from cache folder"
-                    #     )
-
-                except Exception as e:
-                    LogProses(f"Error during cache init: {e}")
-
         except Exception as e:
             LogProses(f"Error during cache init: {e}")
 
-    # def clear_cache_folder(self):
-    #     num_deleted_files = 0
-    #     # Hapus semua file di dalam folder cache
-    #     for file in os.listdir(self.cache_file_path):
-    #         file_path = os.path.join(self.cache_file_path, file)
-    #         try:
-    #             if os.path.isfile(file_path):
-    #                 os.unlink(file_path)
-    #                 num_deleted_files += 1
-    #         except Exception as e:
-    #             LogProses(f"Error deleting file {file}: {e}")
-    #     return num_deleted_files
-
-    def get(self, key):
+    async def get(self, key):
         if GetEnv("cache.bypass", "False").str() == "True":
             return None
 
         if key is None:
             return None
-        key = f"{key}.json"
-        cache_file = Path(self.file_path) / key
 
-        if os.path.exists(cache_file):
-            with open(cache_file, "r") as file:
-                try:
-                    cache_data = json.load(file)
-                    cache_data = convert_from_cache(cache_data)
+        cache_file = os.path.join(self.file_path, f"{key}.json")
 
-                    value = cache_data.get("value")
-                    ttl = cache_data.get("ttl")
+        try:
 
-                    if ttl is not None and ttl < int(
-                        datetime.datetime.now().timestamp()
-                    ):
-                        # TTL sudah kedaluwarsa
-                        try:
-                            os.remove(cache_file)
-                        except Exception as e:
-                            LogProses(f"Error removing cache file: {e}")
-                            return None
-                        return None
-                    return value
+            cache_data = await fileproses.ReadFile(cache_file, suspandLog=True)
 
-                except json.JSONDecodeError as e:
-                    LogProses(f"Error decoding cache: {e}")
-                    return None
-        else:
+            if not cache_data:
+                return None
+
+            value = cache_data.get("value")
+            ttl = cache_data.get("ttl")
+
+            if ttl is not None and ttl < int(datetime.datetime.now().timestamp()):
+                await self.delete(key)
+                return None
+            return value
+
+        except Exception as e:
+            LogProses(f"Error tidak dapat mendapatkan key cache: {e}")
             return None
 
-    def add(self, key, value, ttl=None):
-        key = f"{key}.json"
-        cache_file = Path(self.file_path) / key
+    async def add(self, key, value, ttl=None):
         try:
-            cache_file.touch(exist_ok=True)
-        except Exception as e:
-            LogProses(f"Error creating cache file: {e}")
-            return False
+            key = f"{key}.json"
+            cache_file = os.path.join(self.file_path, key)
 
-        try:
-            # Menyimpan value dan TTL sebagai objek JSON
             cache_data = {"value": value}
             if ttl is not None:
                 ttl = int(ttl) + int(datetime.datetime.now().timestamp())
@@ -117,24 +75,22 @@ class FileCache:
 
             cache_data = convert_to_cache(cache_data)
 
-            with open(cache_file, "w") as file:
-                json.dump(cache_data, file, indent=2)
+            cache_data = await fileproses.SaveFile(cache_data, cache_file)
+
             return True
 
         except Exception as e:
-            LogProses(f"Error saving cache: {e}")
+            LogProses(f"gagal Menyimpan cache: {e}")
             return False
 
-    def delete(self, key):
+    async def delete(self, key):
         try:
             key = f"{key}.json"
-            cache_file = Path(self.file_path) / key
-            # print(cache_file)
-            os.remove(cache_file)
+
+            await fileproses.DeleteFile(key, self.file_path, forceDelete=True)
+
             return True
+
         except Exception as e:
-            LogProses(f"Error deleting cache: {e}")
+            LogProses(f"gagal menghapus cache: {e}")
             return False
-
-
-# }}}

@@ -1,7 +1,9 @@
 from .baseRouter import *
 
 # import view lib
-from APP.config.view import view
+# from APP.config.view import view
+
+from APP.config.View import view
 
 router = APIRouter(
     prefix="/view",

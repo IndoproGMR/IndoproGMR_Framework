@@ -1,6 +1,5 @@
 # vim:fileencoding=utf-8:foldmethod=marker
 
-# System {{{
 
 import os
 from dotenv import load_dotenv
@@ -48,11 +47,13 @@ class EnvVar:
         except ValueError:
             raise ValueError(f"Cannot convert '{self.value}' to float.")
 
+    def is_(self, compare_value: str):
+        return (
+            str(self.value).lower() == str(compare_value).lower()
+        )  # Ignore case sensitivity
+
 
 # Fungsi GetEnv yang mengembalikan objek EnvVar
 def GetEnv(name: str, default: str | int = "") -> EnvVar:
     value = os.environ.get(name, default)
     return EnvVar(value)
-
-
-# }}}

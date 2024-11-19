@@ -16,6 +16,7 @@ if GetEnv("database_type").str() == "sqlite":
 
     try:
         asyncio.create_task(fileProses.SaveFolder(lokasi))
+        # fileProses.SaveFolder(lokasi)
 
     except Exception as e:
         LogProses(f"gagal membuat lokasiSQLite di {lokasiSQLite}: {e}")
