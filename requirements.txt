@@ -1,3 +1,4 @@
+python_version == "3.10"
 # vim:fileencoding=utf-8:foldmethod=marker
 
 # System {{{
