@@ -19,7 +19,7 @@ services:
     volumes:      
       - .:/dockerAPP
     depends_on:
-      - redis
+      # - redis
       # - mysql
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://127.0.0.1:8000/health || exit 1"]
@@ -29,17 +29,17 @@ services:
       start_period: 30s
 
 
-  redis:
-    image: redis:7.4
-    command: ["redis-server", "--bind","0.0.0.0", "--port", "6380"]
-    ports:
-      - 6380:6380
-    healthcheck:
-      test: ["CMD", "redis-cli","-h", "127.0.0.1","-p","6380", "ping"]
-      interval: 120s
-      timeout: 10s
-      retries: 3
-      start_period: 30s
+  # redis:
+  #   image: redis:7.4
+  #   command: ["redis-server", "--bind","0.0.0.0", "--port", "6380"]
+  #   ports:
+  #     - 6380:6380
+  #   healthcheck:
+  #     test: ["CMD", "redis-cli","-h", "127.0.0.1","-p","6380", "ping"]
+  #     interval: 120s
+  #     timeout: 10s
+  #     retries: 3
+  #     start_period: 30s
 
 
   # mysql:
