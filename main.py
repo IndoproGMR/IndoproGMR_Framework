@@ -74,7 +74,6 @@ async def startup_event():
         print("Versi Python terlalu rendah. Minimal versi 3.10.10 diperlukan.")
         sys.exit()  # Pastikan menggunakan sys.exit() untuk menghentikan program
 
-
     LogProses("startup_event")
     if GetEnv("File_CleanTmpOnBoot", "False").is_("True"):
         await fileproses.DeleteFolder("tmp/*", deleteWithContent=True)
