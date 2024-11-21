@@ -7,14 +7,6 @@ import sys
 
 from APP.config.log import LogProses
 
-# Mendapatkan versi Python saat ini
-PY_VER = platform.python_version_tuple()
-
-# Memastikan versi minimal Python adalah 3.10.10
-if (int(PY_VER[0]), int(PY_VER[1]), int(PY_VER[2])) <= (3, 10, 10):
-    print("Versi Python terlalu rendah. Minimal versi 3.10.10 diperlukan.")
-    sys.exit()  # Pastikan menggunakan sys.exit() untuk menghentikan program
-
 # }}}
 
 # @INFO
@@ -74,6 +66,15 @@ fileproses = filemanager.create("")
 # Mulai scheduler ketika aplikasi FastAPI mulai berjalan
 @app.on_event("startup")
 async def startup_event():
+    # Mendapatkan versi Python saat ini
+    PY_VER = platform.python_version_tuple()
+
+    # Memastikan versi minimal Python adalah 3.10.10
+    if (int(PY_VER[0]), int(PY_VER[1]), int(PY_VER[2])) <= (3, 10, 10):
+        print("Versi Python terlalu rendah. Minimal versi 3.10.10 diperlukan.")
+        sys.exit()  # Pastikan menggunakan sys.exit() untuk menghentikan program
+
+
     LogProses("startup_event")
     if GetEnv("File_CleanTmpOnBoot", "False").is_("True"):
         await fileproses.DeleteFolder("tmp/*", deleteWithContent=True)
