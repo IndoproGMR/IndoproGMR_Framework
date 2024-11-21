@@ -20,7 +20,7 @@ redis
 slowapi
 httpx
 
-vercel_blob
+# vercel_blob
 # types-redis
 # tkinter
 # shutil
