@@ -18,9 +18,9 @@ services:
       - MYSQL_PORT=3307
     volumes:      
       - .:/dockerAPP
-    depends_on:
-      # - redis
-      # - mysql
+    # depends_on:
+    #   - redis
+    #   - mysql
     healthcheck:
       test: ["CMD-SHELL", "curl -f http://127.0.0.1:8000/health || exit 1"]
       interval: 120s

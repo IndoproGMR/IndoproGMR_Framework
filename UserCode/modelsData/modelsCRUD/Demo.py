@@ -3,10 +3,6 @@ from .baseCrud import *
 from UserCode.modelsData.modelsTable import Demo as mTDemo
 from UserCode.modelsData.modelsSchemas import Demo as mSDemo
 
-# from APP.config.testPurposes import simulasi
-
-from APP.config.utility import simulasi
-
 
 def createUser(db: Session, user: mSDemo.user_update):
     db_user = mTDemo.user_table(name=user.name, umur=user.umur)
@@ -39,8 +35,6 @@ def updateUserUmur(db: Session, umur_update: int, id_user: int):
         .filter(mTDemo.user_table.id == id_user)
         .first()
     )
-
-    simulasi.start_heavy_process()
 
     if user:
         user.umur = umur_update
